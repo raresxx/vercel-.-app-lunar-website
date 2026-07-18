@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lunar | Fast & Stable</title>
+    
+    <!-- Iconița site-ului (Favicon) -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- Discord & Open Graph Embed Tags -->
+    <meta property="og:title" content="Lunar | Fast & Stable" />
+    <meta property="og:description" content="An free and keyless lua executor for roblox." />
+    <meta property="og:image" content="logo.png" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#050505" />
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         /* Reset & General Styles */
@@ -717,20 +728,14 @@
     <!-- SCRIPTERE JAVASCRIPT -->
     <script>
         // ================= CONFIGURĂRI DETALII ABSOLUTE =================
-        // AM REPARAT URL-UL DE MAI JOS (L-am pus pe cel din Europa, conform pozei tale):
         const FIREBASE_URL = "https://lunawebsite-status-default-rtdb.europe-west1.firebasedatabase.app";
-        
-        // Calea secretă potrivită cu regulile din Firebase
         const SECRET_WRITE_PATH = "secure_path_luna_992288"; 
-
-        // Credențialele secrete cerute la login
         const ADMIN_USER = "lunar@cheating.ac";
         const ADMIN_PASS = "cheatingisfun";
 
         // ================= LOGICĂ COLECTARE STATUS (FIREBASE) =================
         async function fetchStatusesFromFirebase() {
             try {
-                // Citim din folderul secret
                 const response = await fetch(`${FIREBASE_URL}/${SECRET_WRITE_PATH}.json`);
                 const data = await response.json();
                 
@@ -744,7 +749,6 @@
                         document.getElementById('select-mac').value = data.mac;
                     }
                 } else {
-                    // Implicit dacă baza e goală
                     updateStatusUI('windows', 'updated');
                     updateStatusUI('mac', 'updated');
                 }
@@ -755,7 +759,6 @@
             }
         }
 
-        // Modifică insigna și blochează butonul dacă e cazul
         function updateStatusUI(platform, status) {
             const badge = document.getElementById(`badge-${platform}`);
             const btn = document.getElementById(`btn-${platform}`);
@@ -784,7 +787,6 @@
             }
         }
 
-        // Salvează modificările direct în calea secretă din Firebase
         async function saveStatusesToFirebase() {
             const winStatus = document.getElementById('select-windows').value;
             const macStatus = document.getElementById('select-mac').value;
@@ -815,7 +817,7 @@
         window.addEventListener('DOMContentLoaded', fetchStatusesFromFirebase);
 
 
-        // ================= TRIGERUL SECRET: CLICK DEEPY -> SCRIE "ASS" =================
+        // ================= TRIGERUL SECRET =================
         let deepyClicked = false;
         let keysPressed = [];
 
@@ -893,7 +895,6 @@
         window.addEventListener('hashchange', checkHashRoute);
         window.addEventListener('load', checkHashRoute);
 
-        // Modal (Popup selectie link)
         function openDownloadModal(platform) {
             let loolabsHref = "";
             let workinkHref = "";
@@ -915,7 +916,6 @@
             document.getElementById('download-modal').classList.remove('active');
         }
 
-        // Functia de copiere text
         function copyCommand() {
             let codeText = document.getElementById('cmd-text').innerText;
             navigator.clipboard.writeText(codeText).then(() => {
