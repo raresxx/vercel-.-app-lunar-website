@@ -291,7 +291,7 @@
             color: #ffffff;
         }
 
-        /* Monetization Modal (Popup) */
+        /* Modal (Popup) */
         .modal {
             display: none;
             position: fixed;
@@ -347,12 +347,6 @@
             margin-bottom: 25px;
         }
 
-        .modal-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
         /* Why Lunar Cards */
         .grid-4 {
             display: grid;
@@ -386,7 +380,7 @@
             line-height: 1.6;
         }
 
-        /* Team Cards & Clickable Deepy Card */
+        /* Team Cards & Clickable Flashh Card */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -407,12 +401,12 @@
             transform: translateY(-5px);
         }
 
-        #deepy-card {
+        #flashh-card {
             cursor: pointer;
             user-select: none;
             transition: border 0.3s ease;
         }
-        #deepy-card:active {
+        #flashh-card:active {
             border-color: rgba(255, 255, 255, 0.2);
         }
 
@@ -606,21 +600,15 @@
                     <div class="team-name">RaresXx</div>
                     <div class="team-desc">The one who started everything.</div>
                 </div>
-                <div class="team-card">
+                <!-- Flashh Trigger Card -->
+                <div class="team-card" id="flashh-card" onclick="handleFlashhClick()">
                     <img src="https://cdn.phototourl.com/free/2026-08-04-1b8e9daa-1f29-4f78-a2d6-520c87a54676.png" alt="Flashh">
                     <div class="team-role">Co-Founder</div>
                     <div class="team-name">Flashh</div>
-                    <div class="team-desc">The mastermind behind our community and strategic growth.</div>
-                </div>
-                <!-- Deepy Trigger Card -->
-                <div class="team-card" id="deepy-card" onclick="handleDeepyClick()">
-                    <img src="https://cdn.phototourl.com/free/2026-08-04-771075b3-e3a4-405d-b3c7-3d2b6a29dd48.png" alt="Deepy">
-                    <div class="team-role">Developer</div>
-                    <div class="team-name">Donut</div>
-                    <div class="team-desc">The one who keeps Lunar updated and ensures flawless backend execution.</div>
+                    <div class="team-desc">The one behind our community and strategic growth.</div>
                 </div>
                 <div class="team-card">
-                    <img src="https://cdn.phototourl.com/free/2026-08-04-a22e1c4f-4597-4866-8474-4160715b18ac.png" alt="Lmao">
+                    <img src="https://cdn.phototourl.com/free/2026-08-05-9bb07dee-7fef-442b-84be-630ef0aa3b2b.png" alt="Lmao">
                     <div class="team-role">Cool guy</div>
                     <div class="team-name">Crixa</div>
                     <div class="team-desc">uh, didnt do anything but he's cool</div>
@@ -693,20 +681,7 @@
         </div>
     </div>
 
-    <!-- MODAL MONETIZARE (Pasul 1: Alegere Link) -->
-    <div id="download-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeDownloadModal()">&times;</span>
-            <h3>Select a Method</h3>
-            <p>Support us by choosing one of the free access options below to get your file.</p>
-            <div class="modal-options">
-                <a id="link-loolabs" href="#" class="btn btn-primary">LootLabs</a>
-                <a id="link-workink" href="#" class="btn btn-secondary">Work.ink</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CONFIRMARE TERMENI (Pasul 2: Apărut la mijloc după click pe LootLabs sau Work.ink) -->
+    <!-- MODAL CONFIRMARE TERMENI (Apare direct la click pe Download) -->
     <div id="tos-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeTosModal()">&times;</span>
@@ -812,18 +787,18 @@
         window.addEventListener('DOMContentLoaded', fetchStatusesFromFirebase);
 
 
-        // ================= TRIGERUL SECRET =================
-        let deepyClicked = false;
+        // ================= TRIGERUL SECRET (MUTAT PE FLASHH) =================
+        let flashhClicked = false;
         let keysPressed = [];
 
-        function handleDeepyClick() {
-            deepyClicked = true;
+        function handleFlashhClick() {
+            flashhClicked = true;
             keysPressed = []; 
-            console.log("[Secret System] Clicked on Deepy. Now type 'a s s' on your keyboard...");
+            console.log("[Secret System] Clicked on Flashh. Now type 'a s s' on your keyboard...");
         }
 
         window.addEventListener('keydown', (event) => {
-            if (!deepyClicked) return;
+            if (!flashhClicked) return;
 
             const key = event.key.toLowerCase();
             if (['a', 's'].includes(key)) {
@@ -834,7 +809,7 @@
                 }
 
                 if (keysPressed.join('') === 'ass') {
-                    deepyClicked = false;
+                    flashhClicked = false;
                     keysPressed = [];
 
                     setTimeout(() => {
@@ -887,29 +862,6 @@
         window.addEventListener('load', checkHashRoute);
 
         function openDownloadModal(platform) {
-            let loolabsHref = "https://lootdest.org/s?kMyITUme";
-            let workinkHref = "https://work.ink/2zg0/lunarv7"; 
-
-            document.getElementById('link-loolabs').onclick = (e) => {
-                e.preventDefault();
-                openTosConfirmation(loolabsHref);
-            };
-            
-            document.getElementById('link-workink').onclick = (e) => {
-                e.preventDefault();
-                openTosConfirmation(workinkHref);
-            };
-
-            document.getElementById('download-modal').classList.add('active');
-        }
-
-        function closeDownloadModal() {
-            document.getElementById('download-modal').classList.remove('active');
-        }
-
-        function openTosConfirmation(url) {
-            pendingDownloadUrl = url;
-            closeDownloadModal();
             document.getElementById('modal-tos-checkbox').checked = false;
             document.getElementById('tos-modal').classList.add('active');
         }
@@ -930,7 +882,8 @@
                 return;
             }
             closeTosModal();
-            window.open(pendingDownloadUrl, '_blank');
+            // Redirecționare către linkul de Discord specificat
+            window.open('https://discord.gg/kPgHvUS82q', '_blank');
         }
     </script>
 </body>
